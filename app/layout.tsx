@@ -32,6 +32,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
+      <head>
+        <link rel="preload" href="/1.webp" as="image" type="image/webp" fetchPriority="high" />
+        <link rel="preload" href="/10.webp" as="image" type="image/webp" fetchPriority="high" />
+      </head>
       <body
         className={`${cormorant.variable} ${greatVibes.variable} ${josefin.variable} bg-brand-bg text-brand-primary min-h-screen flex flex-col font-sans antialiased`}
         suppressHydrationWarning

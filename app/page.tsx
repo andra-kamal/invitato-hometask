@@ -19,14 +19,21 @@ import FloatingNav from './components/FloatingNav';
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
 
+  // Disable browser scroll restoration and ensure starting at top
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.history.scrollRestoration = 'manual';
+      window.scrollTo(0, 0);
+    }
+  }, []);
+
   // Prevent scrolling when closed
   useEffect(() => {
     if (!isOpen) {
       document.body.style.overflow = 'hidden';
+      window.scrollTo(0, 0);
     } else {
       document.body.style.overflow = 'auto';
-      // Attempt to play music automatically if browser allows
-      // Usually fails without interaction, but FloatingNav has controls
     }
     return () => {
       document.body.style.overflow = 'auto';
@@ -73,16 +80,16 @@ export default function Home() {
         </div>
 
         {/* Right Side - Scrollable content (or full width on mobile) */}
-        <div className={`w-full lg:w-[480px] lg:ml-[calc(100%-480px)] shadow-2xl relative min-h-screen bg-brand-bg ${isOpen ? 'overflow-y-auto' : 'overflow-hidden'}`}>
+        <div className={`w-full lg:w-[480px] lg:ml-[calc(100%-480px)] shadow-2xl relative ${isOpen ? 'min-h-screen overflow-y-auto' : 'h-screen overflow-hidden'} bg-brand-bg`}>
           {/* Cover - shown on ALL screen sizes until opened */}
           <AnimatePresence>
             {!isOpen && (
               <motion.div
                 key="cover"
                 initial={{ opacity: 1 }}
-                exit={{ opacity: 0, y: -50 }}
-                transition={{ duration: 1, ease: 'easeInOut' }}
-                className="absolute inset-0 z-50"
+                exit={{ opacity: 0, y: -40 }}
+                transition={{ duration: 0.8, ease: 'easeInOut' }}
+                className="relative w-full h-screen z-50"
               >
                 <CoverSection onOpen={handleOpen} />
               </motion.div>
@@ -90,20 +97,27 @@ export default function Home() {
           </AnimatePresence>
           
           {/* Main content, hidden until opened */}
-          <div className={`${!isOpen ? 'invisible' : 'visible'} transition-opacity duration-1000`}>
-            {isOpen && <FloatingNav />}
-            
-            <GreetingSection />
-            <CoupleSection />
-            <LoveStorySection />
-            <CountdownSection />
-            <EventSection />
-            <RsvpSection />
-            <GallerySection />
-            <GiftSection />
-            <WishesSection />
-            <FooterSection />
-          </div>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8 }}
+              className="bg-brand-bg"
+            >
+              <FloatingNav />
+              
+              <GreetingSection />
+              <CoupleSection />
+              <LoveStorySection />
+              <CountdownSection />
+              <EventSection />
+              <RsvpSection />
+              <GallerySection />
+              <GiftSection />
+              <WishesSection />
+              <FooterSection />
+            </motion.div>
+          )}
         </div>
       </div>
     </main>

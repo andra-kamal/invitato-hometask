@@ -29,7 +29,7 @@ export default function CoupleSection() {
         >
           <div className="relative w-64 h-80 md:w-72 md:h-96 mb-8 overflow-hidden rounded-t-[40%] rounded-b-md shadow-xl">
             <Image
-              src="/3.webp"
+              src="/5.webp"
               alt="Ricky Ravanelli"
               fill
               className="object-cover"
@@ -69,7 +69,7 @@ export default function CoupleSection() {
         >
           <div className="relative w-64 h-80 md:w-72 md:h-96 mb-8 overflow-hidden rounded-t-[40%] rounded-b-md shadow-xl">
             <Image
-              src="/5.webp"
+              src="/6.webp"
               alt="Fellycia Indriyani Pratama"
               fill
               className="object-cover"

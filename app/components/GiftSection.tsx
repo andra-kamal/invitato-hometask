@@ -44,22 +44,14 @@ export default function GiftSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+            className="fixed inset-0 lg:left-auto lg:w-[480px] z-[100] bg-[#d0d5d8] overflow-y-auto"
           >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-brand-card p-8 rounded-lg max-w-md w-full relative"
-            >
-              <button 
-                onClick={() => setIsModalOpen(false)}
-                className="absolute top-4 right-4 text-brand-primary/50 hover:text-brand-primary"
-              >
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
+            <div className="min-h-screen max-w-2xl mx-auto py-16 px-6 md:px-12 flex flex-col">
+              <h2 className="text-3xl md:text-4xl font-serif text-[#7a7c7f] mb-16 tracking-widest uppercase text-center">
+                Wedding Gift
+              </h2>
+              
+              <div className="flex-1">
               
               <h3 className="text-2xl font-serif text-brand-primary mb-6">Bank Transfer</h3>
               
@@ -80,7 +72,17 @@ export default function GiftSection() {
                   Copy Account Number
                 </button>
               </div>
-            </motion.div>
+              </div>
+
+              <div className="mt-12 text-center pb-8">
+                <button 
+                  onClick={() => setIsModalOpen(false)}
+                  className="px-6 py-2.5 bg-[#767676] text-white font-serif rounded shadow-md hover:bg-[#606060] transition-colors"
+                >
+                  Back to Invitation
+                </button>
+              </div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

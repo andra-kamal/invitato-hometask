@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 type Wish = {
   id: string;
@@ -34,7 +34,7 @@ export default function WishesSection() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.message) return;
+    if (!formData.name.trim() || !formData.message.trim()) return;
 
     setStatus('loading');
     setErrorMessage('');
@@ -49,14 +49,15 @@ export default function WishesSection() {
       if (!res.ok) throw new Error(data.error || 'Failed to submit wish');
       
       if (data.success) {
-        setWishes([data.wish, ...wishes]);
+        setWishes((prev) => [data.wish, ...prev]);
         setFormData({ name: '', message: '' });
         setStatus('success');
-        setTimeout(() => setStatus('idle'), 3000);
+        setTimeout(() => setStatus('idle'), 4000);
       }
     } catch (error: any) {
       setErrorMessage(error.message || 'Failed to submit. Please try again.');
       setStatus('error');
+      setTimeout(() => setStatus('idle'), 5000);
     }
   };
 
@@ -71,6 +72,8 @@ export default function WishesSection() {
       hour12: true,
     }).format(date);
   };
+
+  const isFormValid = formData.name.trim() !== '' && formData.message.trim() !== '';
 
   return (
     <section className="py-12 px-6 md:px-12 bg-brand-bg relative">
@@ -98,7 +101,8 @@ export default function WishesSection() {
               type="text"
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="w-full bg-[#e3e9ef] border border-transparent focus:border-brand-primary/30 rounded px-4 py-3 text-brand-primary outline-none transition-colors"
+              placeholder="Your Name"
+              className="w-full bg-[#e3e9ef] border border-transparent focus:border-brand-primary/30 rounded-lg px-4 py-3 text-brand-primary outline-none transition-all placeholder:text-brand-secondary/50 focus:bg-[#edf2f7]"
               required
             />
           </div>
@@ -109,46 +113,105 @@ export default function WishesSection() {
               value={formData.message}
               onChange={(e) => setFormData({ ...formData, message: e.target.value })}
               rows={4}
-              className="w-full bg-[#e3e9ef] border border-transparent focus:border-brand-primary/30 rounded px-4 py-3 text-brand-primary outline-none transition-colors resize-none"
-              placeholder="..."
+              className="w-full bg-[#e3e9ef] border border-transparent focus:border-brand-primary/30 rounded-lg px-4 py-3 text-brand-primary outline-none transition-all resize-none placeholder:text-brand-secondary/50 focus:bg-[#edf2f7]"
+              placeholder="Write your prayers and warm wishes..."
               required
             />
           </div>
 
-          <div className="flex justify-end">
+          {/* Action Row: Left Notification & Right Submit Button */}
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-1">
+            {/* Notification Area (Left of Submit Button) */}
+            <div className="w-full sm:flex-1 text-left min-h-[36px] flex items-center">
+              <AnimatePresence>
+                {status === 'success' && (
+                  <motion.div
+                    initial={{ opacity: 0, x: -12, scale: 0.95 }}
+                    animate={{ opacity: 1, x: 0, scale: 1 }}
+                    exit={{ opacity: 0, x: -12, scale: 0.95 }}
+                    transition={{ duration: 0.4, ease: 'easeOut' }}
+                    className="inline-flex items-center gap-2 text-emerald-800 bg-emerald-50/95 px-4 py-2 rounded-full border border-emerald-300 text-sm font-serif shadow-sm"
+                  >
+                    <span className="w-5 h-5 rounded-full bg-emerald-500 text-white flex items-center justify-center text-xs shrink-0 font-sans">
+                      ✓
+                    </span>
+                    <span>Thank you! Your wish has been posted.</span>
+                  </motion.div>
+                )}
+                {status === 'error' && (
+                  <motion.div
+                    initial={{ opacity: 0, x: -12, scale: 0.95 }}
+                    animate={{ opacity: 1, x: 0, scale: 1 }}
+                    exit={{ opacity: 0, x: -12, scale: 0.95 }}
+                    transition={{ duration: 0.4, ease: 'easeOut' }}
+                    className="inline-flex items-center gap-2 text-rose-800 bg-rose-50/95 px-4 py-2 rounded-full border border-rose-300 text-sm font-serif shadow-sm"
+                  >
+                    <span className="w-5 h-5 rounded-full bg-rose-500 text-white flex items-center justify-center text-xs shrink-0 font-sans">
+                      !
+                    </span>
+                    <span>{errorMessage}</span>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* Submit Button */}
             <button
               type="submit"
               disabled={status === 'loading'}
-              className={`px-8 py-2 text-white rounded-md transition-colors tracking-widest font-serif disabled:opacity-50 ${formData.name.trim() !== '' && formData.message.trim() !== '' ? 'bg-brand-primary hover:bg-brand-primary/80' : 'bg-[#b4bec8] hover:bg-brand-primary/40'}`}
+              className={`relative inline-flex items-center justify-center gap-2 px-8 py-2.5 text-white rounded-full transition-all duration-300 tracking-widest font-serif disabled:opacity-50 shrink-0 shadow-sm ${
+                isFormValid
+                  ? 'bg-brand-primary hover:bg-brand-primary/90 hover:shadow-md hover:scale-105 active:scale-95 cursor-pointer'
+                  : 'bg-[#b4bec8] hover:bg-brand-primary/40 cursor-not-allowed'
+              }`}
             >
-              {status === 'loading' ? 'Submitting...' : 'Submit'}
+              {status === 'loading' ? (
+                <>
+                  <motion.svg
+                    className="w-4 h-4 text-white"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    animate={{ rotate: 360 }}
+                    transition={{ repeat: Infinity, duration: 1, ease: 'linear' }}
+                  >
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+                  </motion.svg>
+                  <span>Sending...</span>
+                </>
+              ) : (
+                <span>Submit</span>
+              )}
             </button>
           </div>
-          
-          {status === 'success' && (
-            <p className="text-green-600 text-right mt-2 font-serif">Thank you for your wishes!</p>
-          )}
-          {status === 'error' && (
-            <p className="text-red-500 text-right mt-2 font-serif">{errorMessage}</p>
-          )}
         </form>
 
-        {/* Wishes List */}
+        {/* Wishes List with Layout Animation */}
         <div className="space-y-4 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
-          {wishes.map((wish) => (
-            <div key={wish.id} className="bg-[#f5f7f9] p-6 rounded shadow-sm border border-[#e3e9ef]">
-              <div className="flex items-center gap-2 mb-3">
-                <span className="font-bold text-brand-primary">{wish.name}</span>
-                <span className="text-brand-accent text-sm">♦</span>
-              </div>
-              <p className="text-brand-primary/80 font-serif leading-relaxed mb-4">
-                {wish.message}
-              </p>
-              <div className="text-xs text-brand-secondary">
-                {formatDate(wish.createdAt)}
-              </div>
-            </div>
-          ))}
+          <AnimatePresence initial={false}>
+            {wishes.map((wish) => (
+              <motion.div
+                key={wish.id}
+                layout
+                initial={{ opacity: 0, y: -24, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                className="bg-[#f5f7f9] p-6 rounded-xl shadow-sm border border-[#e3e9ef] transition-shadow hover:shadow-md"
+              >
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="font-bold text-brand-primary">{wish.name}</span>
+                  <span className="text-brand-accent text-sm">♦</span>
+                </div>
+                <p className="text-brand-primary/85 font-serif leading-relaxed mb-4 text-[15px]">
+                  {wish.message}
+                </p>
+                <div className="text-xs text-brand-secondary flex items-center justify-between">
+                  <span>{formatDate(wish.createdAt)}</span>
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
           
           {wishes.length === 0 && (
             <p className="text-center text-brand-secondary italic py-8">

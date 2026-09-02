@@ -22,8 +22,8 @@ export default function FooterSection() {
         
         <div className="text-sm md:text-base text-white/60 flex justify-end">
           <div className="text-right">
-            <p>Created with Love by Invitato</p>
-            <p>2024 Ricky & Fellycia</p>
+            <p>Created with Love by Invitato Candidate</p>
+            <p>2026 Ricky & Fellycia</p>
             <p>All Rights Reserved</p>
           </div>
         </div>

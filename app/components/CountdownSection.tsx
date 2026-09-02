@@ -76,9 +76,14 @@ export default function CountdownSection() {
           ))}
         </div>
 
-        <button className="px-8 py-3 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white rounded-md transition-all font-serif tracking-widest">
+        <a 
+          href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Wedding+of+Ricky+and+Fellycia&dates=20261001T040000Z/20261001T140000Z&details=You+are+invited+to+the+wedding+of+Ricky+and+Fellycia.+We+can't+wait+to+see+you+there!&location=MAC+Ballroom,+Semarang"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block px-8 py-3 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white rounded-md transition-all font-serif tracking-widest"
+        >
           Remind Me
-        </button>
+        </a>
       </motion.div>
     </section>
   );
