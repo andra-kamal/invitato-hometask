@@ -1,26 +1,71 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-brand-bg: #dce4ed;
+  --color-brand-primary: #1b2d3e;
+  --color-brand-secondary: #5b7185;
+  --color-brand-accent: #90787a;
+  --color-brand-card: #f0f3f7;
+  --color-brand-footer: #2c3e50;
+  
+  --font-serif: var(--font-cormorant);
+  --font-sans: var(--font-josefin);
+  --font-script: var(--font-great-vibes);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #dce4ed;
+    --foreground: #1b2d3e;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background: #0a0a0a;
+      --foreground: #ededed;
+    }
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    @apply font-sans antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .text-shadow {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+  .text-shadow-sm {
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  }
+  
+  /* Hide scrollbar for gallery but keep functionality */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+}
+
+/* Custom styles to handle split layout */
+@media (min-width: 1024px) {
+  .split-layout-left {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 50vw;
+  }
+  .split-layout-right {
+    margin-left: 50vw;
+    min-height: 100vh;
+  }
 }
