@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 export default function CoupleSection() {
   return (
-    <section className="py-4 px-6 md:px-12 bg-brand-bg">
+    <section id="groom-bride" className="py-4 px-6 md:px-12 bg-brand-bg">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}

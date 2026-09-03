@@ -6,9 +6,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 export default function RsvpSection() {
   const [formData, setFormData] = useState({
     name: '',
-    phone: '',
-    address: '',
-    email: '',
     isAttending: null as boolean | null,
     guestCount: '',
   });
@@ -54,9 +51,6 @@ export default function RsvpSection() {
   const handleReset = () => {
     setFormData({
       name: '',
-      phone: '',
-      address: '',
-      email: '',
       isAttending: null,
       guestCount: '',
     });
@@ -68,7 +62,7 @@ export default function RsvpSection() {
   const isFormValid = formData.name.trim() !== '' && formData.isAttending !== null && Number(formData.guestCount) > 0;
 
   return (
-    <section className="py-12 px-6 md:px-12 bg-brand-bg relative overflow-hidden">
+    <section id="rsvp" className="py-12 px-6 md:px-12 bg-brand-bg relative overflow-hidden">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -216,7 +210,7 @@ export default function RsvpSection() {
               </div>
 
               <div>
-                <label className="block text-brand-primary font-serif text-lg mb-2">Guest Count (Jumlah orang yang hadir):</label>
+                <label className="block text-brand-primary font-serif text-lg mb-2">Guest Count:</label>
                 <input
                   type="number"
                   value={formData.guestCount}

@@ -76,7 +76,7 @@ export default function WishesSection() {
   const isFormValid = formData.name.trim() !== '' && formData.message.trim() !== '';
 
   return (
-    <section className="py-12 px-6 md:px-12 bg-brand-bg relative">
+    <section id="kind-words" className="py-12 px-6 md:px-12 bg-brand-bg relative">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
