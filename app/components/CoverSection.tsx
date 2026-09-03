@@ -10,7 +10,7 @@ interface CoverSectionProps {
 
 export default function CoverSection({ onOpen, guestName = 'Invitato' }: CoverSectionProps) {
   return (
-    <div className="relative w-full h-screen flex flex-col justify-between items-center text-center overflow-hidden bg-[#e5e7eb]">
+    <div className="relative w-full h-[100dvh] flex flex-col justify-between items-center text-center overflow-hidden bg-[#e5e7eb]">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -25,7 +25,7 @@ export default function CoverSection({ onOpen, guestName = 'Invitato' }: CoverSe
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/80" />
       </div>
 
-      <div className="relative z-10 w-full h-full flex flex-col justify-between pt-10 pb-6 px-6">
+      <div className="relative z-10 w-full h-full flex flex-col justify-between pt-10 pb-16 md:pb-12 px-6">
         {/* Top Content */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}

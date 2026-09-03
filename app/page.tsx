@@ -80,7 +80,7 @@ export default function Home() {
         </div>
 
         {/* Right Side - Scrollable content (or full width on mobile) */}
-        <div className={`w-full lg:w-[480px] lg:ml-[calc(100%-480px)] shadow-2xl relative ${isOpen ? 'min-h-screen overflow-y-auto' : 'h-screen overflow-hidden'} bg-brand-bg`}>
+        <div className={`w-full lg:w-[480px] lg:ml-[calc(100%-480px)] shadow-2xl relative ${isOpen ? 'min-h-screen overflow-y-auto' : 'h-[100dvh] overflow-hidden'} bg-brand-bg`}>
           {/* Cover - shown on ALL screen sizes until opened */}
           <AnimatePresence>
             {!isOpen && (
@@ -89,7 +89,7 @@ export default function Home() {
                 initial={{ opacity: 1 }}
                 exit={{ opacity: 0, y: -40 }}
                 transition={{ duration: 0.8, ease: 'easeInOut' }}
-                className="relative w-full h-screen z-50"
+                className="relative w-full h-[100dvh] z-50"
               >
                 <CoverSection onOpen={handleOpen} />
               </motion.div>
